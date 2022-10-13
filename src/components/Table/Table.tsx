@@ -11,12 +11,12 @@ type TableType = {
 const Table = ({ itemsData }: TableType) => {
   const [body, setBody] = useState<TableItem[][]>();
 
-  const groupByColumns = groupBy<TableItem[]>(itemsData, 'userId');
+  const groupByColumns = groupBy(itemsData, 'userId');
   const tableValues = Object.values(groupByColumns);
   // TODO: Вынести в отдельную функцию
   const processedBody = tableValues[0].map((val, index) =>
     tableValues.map(row => row[row.length - 1 - index])
-  ) as TableItem[][];
+  );
 
   useEffect(() => {
     setBody(processedBody);

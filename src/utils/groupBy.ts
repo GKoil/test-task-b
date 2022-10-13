@@ -1,16 +1,20 @@
-const groupBy = <
-  T extends {
-    [key: string]: string | number;
-  }[]
->(
-  objects: T,
-  keyObj: string
-) => {
-  return objects.reduce((acc, object) => {
-    const groupName = object[keyObj] as string;
-    const group = acc[groupName] ?? ([] as []);
-    return { ...acc, [groupName]: [...group, object] };
-  }, {} as { [key: string]: T });
+type MapValuesToKeysIfAllowed<T> = {
+  [K in keyof T]: T[K] extends PropertyKey ? K : never;
 };
+type Filter<T> = MapValuesToKeysIfAllowed<T>[keyof T];
+
+function groupBy<T extends Record<PropertyKey, any>, Key extends Filter<T>>(
+  arr: T[],
+  key: Key
+): Record<T[Key], T[]> {
+  return arr.reduce((acc, item) => {
+    const groupName = item[key];
+    if (!acc[groupName]) {
+      acc[groupName] = [];
+    }
+    acc[groupName].push(item);
+    return acc;
+  }, {} as Record<T[Key], T[]>);
+}
 
 export default groupBy;
