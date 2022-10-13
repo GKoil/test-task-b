@@ -1,5 +1,6 @@
 {
   "private": true,
+  "homepage": "https://gkoil.github.io/test-task-b/",
   "scripts": {
     "start": "node dist/server.bundle.js",
     "build": "run-s clean:dist build:client:prod build:server:prod",
