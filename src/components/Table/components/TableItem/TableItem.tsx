@@ -6,7 +6,7 @@ import styles from './TableItem.module.css';
 const DOUBLE_CLICK = 2;
 
 type TableCellType = {
-  value: string;
+  value: string | number;
   id: number;
 };
 

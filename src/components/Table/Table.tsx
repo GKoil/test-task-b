@@ -23,22 +23,27 @@ const Table = ({ itemsData }: TableType) => {
     setBody(processedBody);
   }, [itemsData]);
 
-  const sort = {
-    up: (id: number) => {
+  const sortUp = React.useCallback(
+    (id: number) => {
       const sorted = processedBody.sort((a, b) =>
         a[id - 1].title < b[id - 1].title ? -1 : 1
       );
 
       setBody(sorted);
     },
-    down: (id: number) => {
+    [processedBody]
+  );
+
+  const sortDown = React.useCallback(
+    (id: number) => {
       const sorted = processedBody.sort((a, b) =>
         a[id - 1].title > b[id - 1].title ? -1 : 1
       );
 
       setBody(sorted);
     },
-  };
+    [processedBody]
+  );
 
   return (
     <table className={styles.table}>
@@ -46,8 +51,8 @@ const Table = ({ itemsData }: TableType) => {
         <tr>
           {Object.keys(groupByColumns).map(item => (
             <TableHeadItem
-              onClickSortUp={() => sort.up(Number(item))}
-              onClickSortDown={() => sort.down(Number(item))}
+              onClickSortUp={() => sortUp(Number(item))}
+              onClickSortDown={() => sortDown(Number(item))}
               key={item}
               value={item}
             />
