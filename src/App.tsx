@@ -29,7 +29,6 @@ const App = () => {
   return (
     <>
       {status === 'pending' && <div>spinner</div>}
-      {/* @ts-ignore */}
       {status === 'success' && <Table itemsData={tableData} />}
       {status === 'error' && <div>error</div>}
     </>
