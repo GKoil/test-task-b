@@ -26,7 +26,7 @@ module.exports = {
       ],
     }),
     new HtmlWebpackPlugin({
-      title: 'Todos',
+      title: 'Table',
       template: `${paths.public}/index.html`,
       filename: 'index.html',
     }),
