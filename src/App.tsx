@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { TableItem } from './types/tableData.type';
 import Table from './components/Table';
 import service from './api';
-import { ADD } from './action-types';
+import { addTableAction } from './action-creators';
 
 const App = () => {
   const dispatch = useDispatch();
-  // @ts-ignore TODO: fix ts-ignore
-  const tableData = useSelector(state => state.tableData) as TableItem[];
+  const tableData = useSelector<{ tableData: TableItem[] }, TableItem[]>(
+    state => state.tableData
+  );
 
   const [status, setStatus] = useState<
     'idle' | 'pending' | 'success' | 'error'
@@ -19,7 +21,7 @@ const App = () => {
       .getTable()
       .then(data => {
         setStatus('success');
-        dispatch({ type: ADD, payload: data });
+        dispatch(addTableAction(data));
       })
       .catch(error => {
         setStatus('error');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { EDIT_CELL } from '../../../../action-types';
+import { editTableCellAction } from '../../../../action-creators';
 
 const DOUBLE_CLICK = 2;
 
@@ -34,7 +34,7 @@ const TableCell = React.memo(({ value, id }: TableCellType) => {
   ) => {
     e.preventDefault();
 
-    dispatch({ type: EDIT_CELL, payload: { id: id, value: valueCell } });
+    dispatch(editTableCellAction({ id, value: valueCell }));
     setIsEdit(false);
   };
 
