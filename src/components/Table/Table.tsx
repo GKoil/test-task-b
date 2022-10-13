@@ -6,18 +6,25 @@ type TableType = {
   itemsData: TableItem[];
 };
 
-const groupByHeader = (objects: TableItem[]) => {
-  const GROUP_KEY = 'userId';
-
+const groupByHeader = <
+  T extends {
+    [key: string]: string | number;
+    id: number;
+    title: string;
+  }[]
+>(
+  objects: T,
+  key: string
+) => {
   return objects.reduce((acc, object) => {
-    const groupName = object[GROUP_KEY];
-    const group = acc[groupName] ?? [];
+    const groupName = object[key];
+    const group = acc[groupName] ?? ([] as []);
     return { ...acc, [groupName]: [...group, object] };
-  }, {} as { [key: string]: TableItem[] });
+  }, {} as { [key: string]: T });
 };
 
 const Table = ({ itemsData }: TableType) => {
-  const processedData = groupByHeader(itemsData);
+  const processedData = groupByHeader<TableItem[]>(itemsData, 'userId');
   const processedContent = Object.values(processedData);
   // TODO: Выделить в функцию
   const processedContentRender = processedContent[0].map((val, index) =>
