@@ -23,12 +23,21 @@ const Table = ({ itemsData }: TableType) => {
     setBody(processedBody);
   }, [itemsData]);
 
-  const sortTableByColumn = (id: number) => {
-    const sorted = processedBody.sort((a, b) =>
-      a[id - 1].title < b[id - 1].title ? -1 : 1
-    );
+  const sort = {
+    up: (id: number) => {
+      const sorted = processedBody.sort((a, b) =>
+        a[id - 1].title < b[id - 1].title ? -1 : 1
+      );
 
-    setBody(sorted);
+      setBody(sorted);
+    },
+    down: (id: number) => {
+      const sorted = processedBody.sort((a, b) =>
+        a[id - 1].title > b[id - 1].title ? -1 : 1
+      );
+
+      setBody(sorted);
+    },
   };
 
   return (
@@ -37,7 +46,8 @@ const Table = ({ itemsData }: TableType) => {
         <tr>
           {Object.keys(groupByColumns).map(item => (
             <TableHeadItem
-              onClick={() => sortTableByColumn(Number(item))}
+              onClickSortUp={() => sort.up(Number(item))}
+              onClickSortDown={() => sort.down(Number(item))}
               key={item}
               value={item}
             />
