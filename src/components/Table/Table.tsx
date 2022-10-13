@@ -3,6 +3,7 @@ import { TableItem } from '../../types/tableData.type';
 import TableCell from './components/TableItem';
 import groupBy from '../../utils/groupBy';
 import TableHeadItem from './components/TableHeadItem';
+import styles from './Table.module.css';
 
 type TableType = {
   itemsData: TableItem[];
@@ -31,7 +32,7 @@ const Table = ({ itemsData }: TableType) => {
   };
 
   return (
-    <table>
+    <table className={styles.table}>
       <thead>
         <tr>
           {Object.keys(groupByColumns).map(item => (

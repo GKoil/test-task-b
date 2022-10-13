@@ -49,3 +49,8 @@ main {
 footer {
 	flex-shrink: 0;
 }
+
+:root {
+	--table-head: #6c7ae0;
+	--table-body-item: #f8f6ff;
+}

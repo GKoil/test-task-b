@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editTableCellAction } from '../../../../action-creators';
+import styles from './TableItem.module.css';
 
 const DOUBLE_CLICK = 2;
 
@@ -39,9 +40,14 @@ const TableCell = React.memo(({ value, id }: TableCellType) => {
   };
 
   return isEdit ? (
-    <td>
-      <form onSubmit={e => handleSubmit(e, id, valueCell)} action=''>
+    <td className={styles.formWrapper}>
+      <form
+        className={styles.form}
+        onSubmit={e => handleSubmit(e, id, valueCell)}
+        action=''
+      >
         <input
+          className={styles.formInput}
           placeholder='data'
           onChange={e => handleOnChange(e)}
           type='text'
@@ -50,7 +56,9 @@ const TableCell = React.memo(({ value, id }: TableCellType) => {
       </form>
     </td>
   ) : (
-    <td onClick={e => handleEdit(e)}>{valueCell}</td>
+    <td onClick={e => handleEdit(e)}>
+      <span className={styles.text}>{valueCell}</span>
+    </td>
   );
 });
 
