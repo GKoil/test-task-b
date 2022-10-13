@@ -1,15 +1,13 @@
 const groupBy = <
   T extends {
     [key: string]: string | number;
-    id: number;
-    title: string;
   }[]
 >(
   objects: T,
-  key: string
+  keyObj: string
 ) => {
   return objects.reduce((acc, object) => {
-    const groupName = object[key];
+    const groupName = object[keyObj] as string;
     const group = acc[groupName] ?? ([] as []);
     return { ...acc, [groupName]: [...group, object] };
   }, {} as { [key: string]: T });
