@@ -1,5 +1,6 @@
 import React from 'react';
 import { TableItem } from '../../types/tableData.type';
+import TableCell from './components/TableItem';
 
 type TableType = {
   itemsData: TableItem[];
@@ -37,7 +38,7 @@ const Table = ({ itemsData }: TableType) => {
           return (
             <tr key={index}>
               {item.map(({ title, id }) => (
-                <td key={id}>{title}</td>
+                <TableCell key={id} id={id} value={title} />
               ))}
             </tr>
           );
