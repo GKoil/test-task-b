@@ -4,6 +4,7 @@ import TableCell from './components/TableItem';
 import groupBy from '../../utils/groupBy';
 import TableHeadItem from './components/TableHeadItem';
 import styles from './Table.module.css';
+import leftMatrixLeft from '../../utils/rotateMatrixLeft';
 
 type TableType = {
   itemsData: TableItem[];
@@ -38,12 +39,9 @@ const Table = ({ itemsData }: TableType) => {
     const columns = Object.keys(itemsGroupByColumns);
     setHeadCells(columns);
 
-    const tableBodyValues = Object.values(itemsGroupByColumns);
-    // TODO: Вынести в отдельную функцию
-    const processedBodyCells = tableBodyValues[0].map((_, index) =>
-      tableBodyValues.map(row => row[row.length - 1 - index])
-    );
-    setBodyCells(processedBodyCells);
+    const bodyValues = Object.values(itemsGroupByColumns);
+    const body = leftMatrixLeft<TableItem>(bodyValues);
+    setBodyCells(body);
   }, [itemsData]);
 
   const handleSort = useCallback(
