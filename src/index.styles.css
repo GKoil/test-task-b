@@ -2,7 +2,6 @@ body {
 	font-family: "Arial", sans-serif;
 	font-weight: 400;
 	line-height: 24px;
-	max-width: 1920px;
 	min-width: 320px;
 	padding: 0;
 	text-transform: none;
@@ -53,6 +52,8 @@ footer {
 :root {
 	--table-head: #6c7ae0;
 	--table-body-item: #f8f6ff;
+	--table-outline: #6c7ae0;
 
-	--main-white: #fff;
+	--main-white: #ffffff;
+	--main-black: #000000;
 }
