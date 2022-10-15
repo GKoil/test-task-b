@@ -32,7 +32,7 @@ const getSortFunction = (sortType: Sort, id: number) => {
 
 const Table = ({ itemsData }: TableType) => {
   const [headCells, setHeadCells] = useState<string[]>();
-  const [bodyCells, setBodyCells] = useState<TableItem[][]>();
+  const [bodyCells, setBodyCells] = useState<{ [key: number]: TableItem[] }>();
 
   useEffect(() => {
     const itemsGroupByColumns = groupBy(itemsData, KEY_TABLE_GROUP);
@@ -41,18 +41,19 @@ const Table = ({ itemsData }: TableType) => {
 
     const bodyValues = Object.values(itemsGroupByColumns);
     const body = leftMatrixLeft<TableItem>(bodyValues);
-    setBodyCells(body);
+    const preparedBody: { [key: number]: TableItem[] } = Object.assign(
+      {},
+      body
+    );
+    setBodyCells(preparedBody);
   }, [itemsData]);
 
-  const handleSort = useCallback(
-    (sortType: Sort) => (id: number) => {
-      const sortFunc = getSortFunction(sortType, id);
-      const prevSort = [...bodyCells];
-      const sortedBodyCells = prevSort.sort(sortFunc);
-      setBodyCells(sortedBodyCells);
-    },
-    [bodyCells]
-  );
+  const handleSort = (sortType: Sort) => (id: number) => {
+    const sortFunc = getSortFunction(sortType, id);
+    const prevSort = Object.values({ ...bodyCells });
+    const sortedBodyCells = prevSort.sort(sortFunc);
+    setBodyCells(sortedBodyCells);
+  };
 
   return (
     <>
@@ -72,10 +73,10 @@ const Table = ({ itemsData }: TableType) => {
           </thead>
           <tbody>
             {bodyCells &&
-              bodyCells.map((item, index) => {
+              Object.entries(bodyCells).map(([item, cells]) => {
                 return (
-                  <tr key={index}>
-                    {item.map(({ title, id }) => (
+                  <tr key={item}>
+                    {cells.map(({ title, id }) => (
                       <TableCell key={id} id={id} value={title} />
                     ))}
                   </tr>
