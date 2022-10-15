@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <>
-      {status === 'pending' && <div>spinner</div>}
+      {(status === 'idle' || status === 'pending') && <div>spinner</div>}
       {status === 'success' && <Table itemsData={tableData} />}
       {status === 'error' && <div>error</div>}
     </>
